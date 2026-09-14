@@ -8,7 +8,7 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="icon" href="app-icon.svg" type="image/svg+xml" />
+  <link rel="icon" href="app-icon-192.png" type="image/png" />
   <title>Kenzofabs | Step in Style.</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1072,7 +1072,7 @@
     <strong>KENZOFABS</strong> — Step in Style. &nbsp; | &nbsp; Affordable • Stylish • Quality
   </div>
 
-  <button class="install-app btn btn-gold" id="installApp" type="button" hidden>Install Kenzofabs app</button>
+  <button class="install-app btn btn-gold" id="installApp" type="button">Install Kenzofabs app</button>
 
   <nav>
     <div class="container nav-inner">
@@ -1654,7 +1654,10 @@
     });
 
     installApp.addEventListener("click", async () => {
-      if (!installPrompt) return;
+      if (!installPrompt) {
+        alert("To install: open Chrome menu (⋮), then choose Add to Home screen or Install app.");
+        return;
+      }
       installPrompt.prompt();
       const choice = await installPrompt.userChoice;
       if (choice.outcome === "accepted") installApp.hidden = true;
