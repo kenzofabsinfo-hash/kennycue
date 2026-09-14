@@ -482,6 +482,50 @@
       font-weight: 700;
     }
 
+    .owner-tools {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .owner-login {
+      display: none;
+      gap: 8px;
+    }
+
+    .owner-login.open { display: flex; }
+
+    .owner-login input {
+      width: 130px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 11px;
+      font: inherit;
+    }
+
+    .owner-tools .btn {
+      padding: 8px 12px;
+      font-size: .76rem;
+    }
+
+    .remove-stock {
+      display: none;
+      margin-top: 10px;
+      padding: 7px 10px;
+      border: 1px solid #c94b3f;
+      border-radius: 999px;
+      background: transparent;
+      color: #a83228;
+      cursor: pointer;
+      font: inherit;
+      font-size: .74rem;
+      font-weight: 800;
+    }
+
+    body.owner-mode .remove-stock { display: inline-flex; }
+
     .stock-list { min-width: 0; }
     .stock-list h3 { margin-bottom: 14px; }
     .stock-list .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
@@ -1159,6 +1203,14 @@
 
             <button class="btn btn-gold" type="submit">Add to stock list</button>
             <p class="stock-message" id="stockMessage" role="status" aria-live="polite"></p>
+            <div class="owner-tools">
+              <button class="btn btn-dark" id="ownerToggle" type="button">Owner access</button>
+              <div class="owner-login" id="ownerLogin">
+                <input id="ownerPinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="Owner PIN" aria-label="Owner PIN">
+                <button class="btn btn-gold" id="ownerUnlock" type="button">Unlock</button>
+              </div>
+              <span class="stock-help" id="ownerStatus">Owner controls hidden</span>
+            </div>
           </form>
 
           <div class="stock-list">
@@ -1473,7 +1525,12 @@
     const stockStorageKey = "kenzofabs-stock";
     const whatsappNumber = "254768609246";
 
-    function addStockCard(item, target = stockGrid) {
+    const soldStockKey = "kenzofabs-sold-stock";
+    const ownerPin = "38687615";
+    let ownerMode = false;
+
+    function addStockCard(item, target = stockGrid, stockId = "") {
+      if (soldStockKey && JSON.parse(localStorage.getItem(soldStockKey) || "[]").includes(stockId)) return;
       const article = document.createElement("article");
       article.className = "product";
 
@@ -1521,12 +1578,29 @@
       order.textContent = "Order";
       priceRow.appendChild(order);
 
+      const remove = document.createElement("button");
+      remove.className = "remove-stock";
+      remove.type = "button";
+      remove.textContent = "Mark sold out";
+      remove.addEventListener("click", () => {
+        if (!ownerMode || !confirm(`Remove ${item.name} from stock?`)) return;
+        const soldItems = JSON.parse(localStorage.getItem(soldStockKey) || "[]");
+        if (stockId && !soldItems.includes(stockId)) {
+          soldItems.push(stockId);
+          localStorage.setItem(soldStockKey, JSON.stringify(soldItems));
+        }
+        article.remove();
+      });
+      body.appendChild(remove);
+
       body.appendChild(priceRow);
       article.append(photo, body);
       target.appendChild(article);
     }
 
-    JSON.parse(localStorage.getItem(stockStorageKey) || "[]").forEach(addStockCard);
+    JSON.parse(localStorage.getItem(stockStorageKey) || "[]").forEach((item, index) => {
+      addStockCard(item, stockGrid, `custom-${index}-${item.name}`);
+    });
 
     const newStockGrid = document.getElementById("newStockGrid");
     const stockColours = [
@@ -1544,8 +1618,34 @@
         details: `Original stock photo • Colour: ${stockColours[stockNumber - 1]}`,
         price: "353",
         badge: "New stock"
-      }, newStockGrid);
+      }, newStockGrid, `stock-${String(stockNumber).padStart(2, "0")}`);
     }
+
+    document.getElementById("ownerToggle").addEventListener("click", () => {
+      if (ownerMode) {
+        ownerMode = false;
+        document.body.classList.remove("owner-mode");
+        document.getElementById("ownerToggle").textContent = "Owner access";
+        document.getElementById("ownerStatus").textContent = "Owner controls hidden";
+        return;
+      }
+
+      document.getElementById("ownerLogin").classList.toggle("open");
+      document.getElementById("ownerPinInput").focus();
+    });
+
+    document.getElementById("ownerUnlock").addEventListener("click", () => {
+      if (document.getElementById("ownerPinInput").value === ownerPin) {
+        ownerMode = true;
+        document.body.classList.add("owner-mode");
+        document.getElementById("ownerLogin").classList.remove("open");
+        document.getElementById("ownerPinInput").value = "";
+        document.getElementById("ownerToggle").textContent = "Lock owner controls";
+        document.getElementById("ownerStatus").textContent = "Owner controls unlocked";
+      } else {
+        document.getElementById("ownerStatus").textContent = "Incorrect PIN";
+      }
+    });
 
     stockForm.addEventListener("submit", event => {
       event.preventDefault();
