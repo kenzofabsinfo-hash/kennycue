@@ -587,6 +587,12 @@
       font-size: .82rem;
     }
 
+    .auth-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
     .cart-list { display: grid; gap: 10px; margin-top: 15px; }
 
     .cart-item {
@@ -1351,6 +1357,7 @@
             </form>
             <button class="btn btn-dark" id="authSwitch" type="button">I already have an account</button>
             <button class="btn btn-dark" id="signOut" type="button" hidden>Sign out</button>
+            <button class="btn btn-dark" id="resendConfirmation" type="button" hidden>Resend confirmation email</button>
             <p class="account-message" id="authMessage" role="status" aria-live="polite"></p>
           </div>
 
@@ -1808,9 +1815,17 @@
 
     addCartButtonToExistingProducts();
 
+    const authRedirectUrl = `${window.location.origin}${window.location.pathname}`;
     const supabaseClient = window.supabase.createClient(
       "https://dpzcesxuoeuaayjhemun.supabase.co",
-      "sb_publishable_xFW5_hCNzDCnNyuIKdrGiw__IIHyizj"
+      "sb_publishable_xFW5_hCNzDCnNyuIKdrGiw__IIHyizj",
+      {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: true
+        }
+      }
     );
     const authCard = document.getElementById("authCard");
     const signupForm = document.getElementById("signupForm");
@@ -1818,12 +1833,18 @@
     const authSwitch = document.getElementById("authSwitch");
     const signOut = document.getElementById("signOut");
     const authMessage = document.getElementById("authMessage");
+    const resendConfirmation = document.getElementById("resendConfirmation");
     const cartList = document.getElementById("cartList");
     const cartTotal = document.getElementById("cartTotal");
     let authMode = "signup";
 
     function showAuthMessage(message) {
       authMessage.textContent = message;
+    }
+
+    function setAuthBusy(form, busy) {
+      form.querySelector("button[type=submit]").disabled = busy;
+      form.querySelector("button[type=submit]").textContent = busy ? "Please wait..." : (form === signupForm ? "Create account" : "Sign in");
     }
 
     async function loadCart() {
@@ -1914,27 +1935,50 @@
 
     signupForm.addEventListener("submit", async event => {
       event.preventDefault();
+      setAuthBusy(signupForm, true);
       const { error } = await supabaseClient.auth.signUp({
         email: document.getElementById("signupEmail").value.trim(),
         password: document.getElementById("signupPassword").value,
         options: {
+          emailRedirectTo: authRedirectUrl,
           data: {
             full_name: document.getElementById("signupName").value.trim(),
             phone: document.getElementById("signupPhone").value.trim()
           }
         }
       });
+      setAuthBusy(signupForm, false);
       showAuthMessage(error ? error.message : "Account created. Check your email to confirm it.");
+      resendConfirmation.hidden = Boolean(error);
     });
 
     loginForm.addEventListener("submit", async event => {
       event.preventDefault();
+      setAuthBusy(loginForm, true);
       const { error } = await supabaseClient.auth.signInWithPassword({
         email: document.getElementById("loginEmail").value.trim(),
         password: document.getElementById("loginPassword").value
       });
+      setAuthBusy(loginForm, false);
       showAuthMessage(error ? error.message : "Signed in successfully.");
+      resendConfirmation.hidden = !error;
       if (!error) loadCart();
+    });
+
+    resendConfirmation.addEventListener("click", async () => {
+      const email = document.getElementById("signupEmail").value.trim() || document.getElementById("loginEmail").value.trim();
+      if (!email) {
+        showAuthMessage("Enter your email first, then request a confirmation email.");
+        return;
+      }
+      resendConfirmation.disabled = true;
+      const { error } = await supabaseClient.auth.resend({
+        type: "signup",
+        email,
+        options: { emailRedirectTo: authRedirectUrl }
+      });
+      resendConfirmation.disabled = false;
+      showAuthMessage(error ? error.message : "A new confirmation email was sent.");
     });
 
     authSwitch.addEventListener("click", () => {
@@ -1951,13 +1995,15 @@
       if (!error) loadCart();
     });
 
-    supabaseClient.auth.onAuthStateChange((_event, session) => {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
       const signedIn = Boolean(session?.user);
       signupForm.hidden = signedIn;
       loginForm.hidden = signedIn;
       authSwitch.hidden = signedIn;
       signOut.hidden = !signedIn;
+      resendConfirmation.hidden = signedIn || event === "SIGNED_IN";
       document.getElementById("authTitle").textContent = signedIn ? `Signed in as ${session.user.email}` : "Create an account";
+      if (event === "SIGNED_IN") showAuthMessage("Email confirmed. You are signed in.");
       loadCart();
     });
     loadCart();
