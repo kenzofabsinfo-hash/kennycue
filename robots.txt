@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kenzofabsinfo-hash.github.io/kennycue/sitemap.xml
