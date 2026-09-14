@@ -430,6 +430,64 @@
       font-size: .78rem;
     }
 
+    /* STOCK FORM */
+    .stock-manager { background: var(--white); }
+
+    .stock-manager-card {
+      display: grid;
+      grid-template-columns: minmax(260px, .75fr) 1.25fr;
+      gap: 28px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--cream);
+    }
+
+    .stock-form { display: grid; gap: 13px; }
+
+    .stock-form label {
+      display: grid;
+      gap: 6px;
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .stock-form input,
+    .stock-form textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 12px;
+      font: inherit;
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .stock-form textarea { min-height: 76px; resize: vertical; }
+
+    .stock-form input:focus,
+    .stock-form textarea:focus {
+      outline: 2px solid rgba(201,162,39,.45);
+      border-color: var(--gold);
+    }
+
+    .stock-help, .stock-message {
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .stock-message {
+      min-height: 1.4em;
+      color: #287a45;
+      font-weight: 700;
+    }
+
+    .stock-list { min-width: 0; }
+    .stock-list h3 { margin-bottom: 14px; }
+    .stock-list .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+    .new-stock { background: var(--cream); }
+
     /* BRAND STORY */
     .story {
       background: var(--black);
@@ -828,6 +886,7 @@
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .hero-grid, .story-grid { grid-template-columns: 1fr; }
+      .stock-manager-card { grid-template-columns: 1fr; }
       .hero { padding: 80px 0; }
       .hero-card { max-width: 560px; margin: auto; }
       .benefit-grid { grid-template-columns: repeat(2, 1fr); }
@@ -856,6 +915,7 @@
       .hero { min-height: auto; padding: 70px 0; }
       .shoe-stage { min-height: 310px; }
       .shoe-icon { font-size: 6.5rem; }
+      .stock-manager-card { padding: 18px; }
       .benefit-grid, .product-grid, .kit-grid, .steps {
         grid-template-columns: 1fr;
       }
@@ -889,6 +949,7 @@
 
       <ul class="nav-links" id="navLinks">
         <li><a href="#shop">Shop</a></li>
+        <li><a href="#stock">Add Stock</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#brand">Brand</a></li>
         <li><a href="#order">How to Order</a></li>
@@ -924,7 +985,7 @@
 
         <div class="hero-card">
           <div class="shoe-stage">
-            <img class="shoe-icon" src="sandal-collection.jpeg" alt="Kenzofabs sandals collection">
+            <img class="shoe-icon" src="images/sandal-collection.jpeg" alt="Kenzofabs sandals collection">
             <div class="hero-card-label">KENZOFABS • QUALITY MEETS AFFORDABILITY</div>
           </div>
         </div>
@@ -978,7 +1039,7 @@
           <article class="product">
             <div class="product-photo">
               <span class="badge">Best seller</span>
-              <img class="big-shoe" src="sandal-collection.jpeg" alt="Blue, tan, cream and black women's sandals">
+              <img class="big-shoe" src="images/sandal-collection.jpeg" alt="Blue, tan, cream and black women's sandals">
             </div>
             <div class="product-body">
               <h3>Classic White Sneaker</h3>
@@ -993,7 +1054,7 @@
           <article class="product">
             <div class="product-photo">
               <span class="badge">New</span>
-              <img class="big-shoe" src="black-embellished-sandal.jpeg" alt="Black embellished women's sandals">
+              <img class="big-shoe" src="images/black-embellished-sandal.jpeg" alt="Black embellished women's sandals">
             </div>
             <div class="product-body">
               <h3>Smart Casual Shoe</h3>
@@ -1008,7 +1069,7 @@
           <article class="product">
             <div class="product-photo">
               <span class="badge">Popular</span>
-              <img class="big-shoe" src="sandal-collection.jpeg" alt="Blue, tan, cream and black women's sandals">
+              <img class="big-shoe" src="images/sandal-collection.jpeg" alt="Blue, tan, cream and black women's sandals">
             </div>
             <div class="product-body">
               <h3>Everyday Sandal</h3>
@@ -1023,7 +1084,7 @@
           <article class="product">
             <div class="product-photo">
               <span class="badge">New</span>
-              <img src="sandal-collection.jpeg" alt="Blue, tan, cream and black women's sandals">
+              <img src="images/sandal-collection.jpeg" alt="Blue, tan, cream and black women's sandals">
             </div>
             <div class="product-body">
               <h3>Colour Pop Sandals</h3>
@@ -1038,7 +1099,7 @@
           <article class="product">
             <div class="product-photo">
               <span class="badge">Featured</span>
-              <img src="black-embellished-sandal.jpeg" alt="Black embellished women's sandals">
+              <img src="images/black-embellished-sandal.jpeg" alt="Black embellished women's sandals">
             </div>
             <div class="product-body">
               <h3>Black Embellished Sandal</h3>
@@ -1051,6 +1112,74 @@
           </article>
 
         </div>
+      </div>
+    </section>
+
+    <!-- STOCK MANAGER -->
+    <section id="stock" class="stock-manager">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Stock manager</div>
+            <h2>Add more shoes.</h2>
+          </div>
+          <p class="section-description">
+            Add a product photo, details and price. New stock is saved on this device
+            and appears below the form after you add it.
+          </p>
+        </div>
+
+        <div class="stock-manager-card">
+          <form class="stock-form" id="stockForm">
+            <label>
+              Product image
+              <input id="stockImage" type="file" accept="image/*" required>
+            </label>
+            <p class="stock-help">Choose a clear photo from your phone or computer.</p>
+
+            <label>
+              Shoe name
+              <input id="stockName" type="text" placeholder="e.g. Black Flat Sandal" required>
+            </label>
+
+            <label>
+              Description and sizes
+              <textarea id="stockDetails" placeholder="Comfortable • Everyday&#10;Sizes: 36–40" required></textarea>
+            </label>
+
+            <label>
+              Price (KSh)
+              <input id="stockPrice" type="number" min="1" step="1" value="430" required>
+            </label>
+
+            <label>
+              Badge
+              <input id="stockBadge" type="text" placeholder="New arrival">
+            </label>
+
+            <button class="btn btn-gold" type="submit">Add to stock list</button>
+            <p class="stock-message" id="stockMessage" role="status" aria-live="polite"></p>
+          </form>
+
+          <div class="stock-list">
+            <h3>Added on this device</h3>
+            <div class="product-grid" id="stockGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW STOCK -->
+    <section id="new-stock" class="new-stock">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">New stock</div>
+            <h2>More pairs in stock.</h2>
+          </div>
+          <p class="section-description">Original product photos from the latest Kenzofabs stock.</p>
+        </div>
+        <div class="product-grid" id="newStockGrid"></div>
       </div>
     </section>
 
@@ -1195,7 +1324,7 @@
           </div>
 
           <div class="post-visual">
-            <img class="post-shoe" src="black-embellished-sandal.jpeg" alt="Black embellished women's sandals">
+            <img class="post-shoe" src="images/black-embellished-sandal.jpeg" alt="Black embellished women's sandals">
 
             <div class="post-info">
               <span class="new">NEW ARRIVAL</span>
@@ -1335,6 +1464,119 @@
 
     navLinks.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => navLinks.classList.remove("open"));
+    });
+
+    // Add stock locally so the form works on a static GitHub Pages website.
+    const stockForm = document.getElementById("stockForm");
+    const stockGrid = document.getElementById("stockGrid");
+    const stockMessage = document.getElementById("stockMessage");
+    const stockStorageKey = "kenzofabs-stock";
+    const whatsappNumber = "254768609246";
+
+    function addStockCard(item, target = stockGrid) {
+      const article = document.createElement("article");
+      article.className = "product";
+
+      const photo = document.createElement("div");
+      photo.className = "product-photo";
+
+      if (item.badge) {
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = item.badge;
+        photo.appendChild(badge);
+      }
+
+      const image = document.createElement("img");
+      image.className = "big-shoe";
+      image.src = item.image;
+      image.alt = item.name;
+      photo.appendChild(image);
+
+      const body = document.createElement("div");
+      body.className = "product-body";
+
+      const name = document.createElement("h3");
+      name.textContent = item.name;
+      body.appendChild(name);
+
+      const details = document.createElement("p");
+      details.className = "product-meta";
+      details.textContent = item.details;
+      body.appendChild(details);
+
+      const priceRow = document.createElement("div");
+      priceRow.className = "price-row";
+
+      const price = document.createElement("span");
+      price.className = "price";
+      price.textContent = `KSh ${item.price}`;
+      priceRow.appendChild(price);
+
+      const order = document.createElement("a");
+      order.className = "btn btn-gold small-btn";
+      order.target = "_blank";
+      order.rel = "noopener noreferrer";
+      order.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hello Kenzofabs, I'm interested in the ${item.name}.`)}`;
+      order.textContent = "Order";
+      priceRow.appendChild(order);
+
+      body.appendChild(priceRow);
+      article.append(photo, body);
+      target.appendChild(article);
+    }
+
+    JSON.parse(localStorage.getItem(stockStorageKey) || "[]").forEach(addStockCard);
+
+    const newStockGrid = document.getElementById("newStockGrid");
+    const stockColours = [
+      "Black", "Blue", "Black", "Black", "Black", "White", "White",
+      "Mixed", "White", "White", "White", "Black", "White", "Black",
+      "White", "White", "White", "Black", "White", "Black", "White",
+      "White", "White", "White", "White", "Blue", "White", "White",
+      "White", "White", "Blue", "Grey", "Grey", "Black", "White",
+      "Grey", "White"
+    ];
+    for (let stockNumber = 1; stockNumber <= 37; stockNumber++) {
+      addStockCard({
+        image: `images/stock-${String(stockNumber).padStart(2, "0")}.jpeg`,
+        name: `Stock ${String(stockNumber).padStart(2, "0")} - ${stockColours[stockNumber - 1]}`,
+        details: `Original stock photo • Colour: ${stockColours[stockNumber - 1]}`,
+        price: "353",
+        badge: "New stock"
+      }, newStockGrid);
+    }
+
+    stockForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const file = document.getElementById("stockImage").files[0];
+
+      if (!file || !file.type.startsWith("image/")) {
+        stockMessage.textContent = "Please choose an image file.";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        const item = {
+          image: reader.result,
+          name: document.getElementById("stockName").value.trim(),
+          details: document.getElementById("stockDetails").value.trim(),
+          price: document.getElementById("stockPrice").value,
+          badge: document.getElementById("stockBadge").value.trim()
+        };
+        const savedStock = JSON.parse(localStorage.getItem(stockStorageKey) || "[]");
+        savedStock.push(item);
+        localStorage.setItem(stockStorageKey, JSON.stringify(savedStock));
+        addStockCard(item);
+        stockForm.reset();
+        document.getElementById("stockPrice").value = "430";
+        stockMessage.textContent = `${item.name} was added to the stock list.`;
+      });
+      reader.addEventListener("error", () => {
+        stockMessage.textContent = "The image could not be read. Please try again.";
+      });
+      reader.readAsDataURL(file);
     });
 
     // Current year
