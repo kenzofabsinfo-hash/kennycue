@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kenzofabs offers affordable, stylish and quality footwear in Kenya. Shop original sandals and shoes, sign in, save your cart and order on WhatsApp." />
+  <meta name="keywords" content="Kenzofabs, shoes in Kenya, affordable sandals, footwear, Alupe shoes, buy shoes online Kenya" />
+  <meta name="author" content="Kenzofabs" />
+  <meta name="google-site-verification" content="pmCcZsr9810O7YDgHM5puVHLjrKSOKn5JzS4_CoewHs" />
+  <link rel="canonical" href="https://kenzofabsinfo-hash.github.io/kennycue/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Kenzofabs | Affordable Footwear in Kenya" />
+  <meta property="og:description" content="Shop stylish and affordable Kenzofabs footwear with secure accounts, cart support and WhatsApp ordering." />
+  <meta property="og:url" content="https://kenzofabsinfo-hash.github.io/kennycue/" />
+  <meta property="og:image" content="https://kenzofabsinfo-hash.github.io/kennycue/app-icon-512.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kenzofabs | Affordable Footwear in Kenya" />
+  <meta name="twitter:description" content="Shop stylish and affordable Kenzofabs footwear." />
+  <meta name="theme-color" content="#111111" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="app-icon-192.png" type="image/png" />
+  <title>Kenzofabs | Step in Style.</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --black: #111111;
+      --gold: #C9A227;
+      --gold-light: #E7C75D;
+      --cream: #F7F3EA;
+      --white: #FFFFFF;
+      --muted: #6B665D;
+      --border: #E8E0D2;
+      --shadow: 0 12px 35px rgba(17,17,17,.08);
+      --radius: 18px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--black);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .container {
+      width: min(92%, var(--max));
+      margin: auto;
+    }
+
+    .announcement {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 9px 15px;
+      font-size: .82rem;
+      letter-spacing: .04em;
+    }
+
+    .announcement strong { color: var(--gold-light); }
+
+    /* NAVIGATION */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(247,243,234,.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+    .brand-mark {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      color: var(--gold);
+      background: var(--black);
+      font-size: 1.15rem;
+      font-weight: 900;
+      position: relative;
+    }
+
+    .brand-mark::after {
+      content: "⌁";
+      position: absolute;
+      right: 5px;
+      bottom: 1px;
+      font-size: .85rem;
+      transform: rotate(-10deg);
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 1.2rem;
+      line-height: 1.05;
+    }
+
+    .brand-text small {
+      display: block;
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: .03em;
+      margin-top: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      list-style: none;
+      font-size: .92rem;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta, .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 12px 19px;
+      font-weight: 800;
+      transition: .2s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .nav-cta, .btn-gold {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    .nav-cta:hover, .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: 0;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 690px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(201,162,39,.20), transparent 25%),
+        linear-gradient(135deg, var(--black) 0%, #1c1c1c 52%, #30270f 100%);
+      color: var(--white);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border: 1px solid rgba(201,162,39,.22);
+      border-radius: 50%;
+      right: -170px;
+      bottom: -220px;
+    }
+
+    .hero-grid {
+      width: min(92%, var(--max));
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-size: .78rem;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6.4rem);
+      line-height: .92;
+      letter-spacing: -.05em;
+      margin-bottom: 24px;
+    }
+
+    .gold { color: var(--gold-light); }
+
+    .hero-copy {
+      max-width: 600px;
+      color: #e8e4db;
+      font-size: 1.08rem;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-dark {
+      border-color: rgba(255,255,255,.25);
+      color: var(--white);
+      background: transparent;
+    }
+
+    .btn-dark:hover {
+      background: rgba(255,255,255,.08);
+    }
+
+    .hero-card {
+      background: linear-gradient(145deg, #f9f5ed, #e9dfcc);
+      border-radius: 30px;
+      padding: 22px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.3);
+      transform: rotate(2deg);
+    }
+
+    .shoe-stage {
+      min-height: 420px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(201,162,39,.22), transparent 30%),
+        linear-gradient(145deg, #fff, #eee7da);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .shoe-icon {
+      width: 88%;
+      height: 88%;
+      object-fit: contain;
+      filter: drop-shadow(0 25px 18px rgba(0,0,0,.2));
+    }
+
+    .hero-card-label {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      background: var(--black);
+      color: var(--white);
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+
+    /* SECTIONS */
+    section { padding: 90px 0; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      align-items: end;
+      margin-bottom: 40px;
+    }
+
+    .section-kicker {
+      color: var(--gold);
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .75rem;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+
+    .section-description {
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    /* BENEFITS */
+    .benefits {
+      background: var(--white);
+    }
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .benefit {
+      padding: 30px 22px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .benefit:last-child { border-right: 0; }
+
+    .benefit-icon {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--cream);
+      color: var(--gold);
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .benefit h3 { font-size: 1rem; margin-bottom: 5px; }
+    .benefit p { font-size: .85rem; color: var(--muted); }
+
+    /* PRODUCTS */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .product {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(17,17,17,.04);
+      transition: .25s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .product-photo {
+      aspect-ratio: 1 / .86;
+      background: linear-gradient(145deg, #fdfbf7, #e9e1d3);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .product-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 12px;
+    }
+
+    .product-photo .big-shoe {
+      width: 100%;
+      height: 100%;
+      padding: 12px;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 10px rgba(0,0,0,.16));
+    }
+
+    .badge {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      background: var(--gold);
+      color: var(--black);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: .68rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .product-body { padding: 20px; }
+
+    .product h3 { font-size: 1.15rem; margin-bottom: 5px; }
+
+    .product-meta {
+      color: var(--muted);
+      font-size: .85rem;
+      margin-bottom: 13px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .price {
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+
+    .small-btn {
+      padding: 9px 13px;
+      font-size: .78rem;
+    }
+
+    .cart-button {
+      padding: 9px 13px;
+      font-size: .78rem;
+      border: 1px solid var(--gold);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--black);
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    /* STOCK FORM */
+    .stock-manager { background: var(--white); }
+
+    .stock-manager-card {
+      display: grid;
+      grid-template-columns: minmax(260px, .75fr) 1.25fr;
+      gap: 28px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--cream);
+    }
+
+    .stock-form { display: grid; gap: 13px; }
+
+    .stock-form label {
+      display: grid;
+      gap: 6px;
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .stock-form input,
+    .stock-form textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 12px;
+      font: inherit;
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .stock-form textarea { min-height: 76px; resize: vertical; }
+
+    .stock-form input:focus,
+    .stock-form textarea:focus {
+      outline: 2px solid rgba(201,162,39,.45);
+      border-color: var(--gold);
+    }
+
+    .stock-help, .stock-message {
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .stock-message {
+      min-height: 1.4em;
+      color: #287a45;
+      font-weight: 700;
+    }
+
+    .owner-tools {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .owner-login {
+      display: none;
+      gap: 8px;
+    }
+
+    .owner-login.open { display: flex; }
+
+    .owner-login input {
+      width: 130px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 11px;
+      font: inherit;
+    }
+
+    .owner-tools .btn {
+      padding: 8px 12px;
+      font-size: .76rem;
+    }
+
+    .remove-stock {
+      display: none;
+      margin-top: 10px;
+      padding: 7px 10px;
+      border: 1px solid #c94b3f;
+      border-radius: 999px;
+      background: transparent;
+      color: #a83228;
+      cursor: pointer;
+      font: inherit;
+      font-size: .74rem;
+      font-weight: 800;
+    }
+
+    body.owner-mode .remove-stock { display: inline-flex; }
+
+    .stock-list { min-width: 0; }
+    .stock-list h3 { margin-bottom: 14px; }
+    .stock-list .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+    .new-stock { background: var(--cream); }
+
+    .account-panel { background: var(--white); }
+
+    .account-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .account-card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--cream);
+    }
+
+    .account-card form { display: grid; gap: 12px; }
+
+    .account-card label {
+      display: grid;
+      gap: 5px;
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .account-card input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 12px;
+      font: inherit;
+    }
+
+    .account-message {
+      min-height: 1.4em;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .auth-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .cart-list { display: grid; gap: 10px; margin-top: 15px; }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--white);
+    }
+
+    .cart-item small { display: block; color: var(--muted); }
+
+    .cart-remove {
+      border: 0;
+      background: transparent;
+      color: #a83228;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .cart-total {
+      margin-top: 15px;
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    /* BRAND STORY */
+    .story {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .logo-display {
+      min-height: 400px;
+      background: #171717;
+      border: 1px solid rgba(201,162,39,.35);
+      border-radius: 28px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 35px;
+    }
+
+    .logo-symbol-large {
+      width: 130px;
+      height: 130px;
+      margin: auto auto 20px;
+      border: 4px solid var(--gold);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      font-size: 4rem;
+      font-weight: 900;
+    }
+
+    .logo-display h3 {
+      font-size: 2.1rem;
+      letter-spacing: .14em;
+    }
+
+    .script {
+      color: var(--gold-light);
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      margin-top: 8px;
+    }
+
+    .story-copy p {
+      color: #d3cec4;
+      margin: 18px 0;
+      max-width: 650px;
+    }
+
+    .values {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .value {
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 15px;
+      border-radius: 12px;
+      color: #e8e4db;
+    }
+
+    .value strong {
+      display: block;
+      color: var(--gold-light);
+      margin-bottom: 3px;
+    }
+
+    /* BRAND KIT */
+    .brand-kit { background: var(--white); }
+
+    .kit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .kit-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      background: var(--cream);
+    }
+
+    .kit-card h3 { margin-bottom: 20px; }
+
+    .swatches {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .swatch { text-align: center; }
+
+    .swatch-color {
+      width: 85px;
+      height: 85px;
+      border-radius: 16px;
+      margin-bottom: 7px;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+
+    .swatch small { color: var(--muted); }
+
+    .packaging {
+      background: var(--black);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 30px;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sticker {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: var(--black);
+      border: 3px solid var(--gold);
+      box-shadow: inset 0 0 0 5px var(--black), inset 0 0 0 7px var(--gold);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      margin: auto;
+      color: var(--gold-light);
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+    .sticker span {
+      display: block;
+      font-size: 1.1rem;
+      letter-spacing: .05em;
+    }
+
+    .sticker em {
+      display: block;
+      font-family: Georgia, serif;
+      font-weight: 400;
+      letter-spacing: 0;
+      margin-top: 4px;
+    }
+
+    /* THANK YOU */
+    .thankyou {
+      background: #e8dfd0;
+    }
+
+    .thank-card {
+      width: min(100%, 470px);
+      margin: auto;
+      background: var(--white);
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      border-top: 6px solid var(--gold);
+    }
+
+    .thank-card .mini-logo {
+      font-weight: 900;
+      letter-spacing: .12em;
+      font-size: 1.25rem;
+    }
+
+    .thank-card h3 {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: 2rem;
+      margin: 20px 0 10px;
+    }
+
+    .thank-card p { color: var(--muted); }
+
+    .thank-card .share {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: .85rem;
+    }
+
+    /* SOCIAL TEMPLATE */
+    .social {
+      background: var(--cream);
+    }
+
+    .post-template {
+      max-width: 850px;
+      margin: auto;
+      background: var(--white);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .post-top {
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 900;
+    }
+
+    .post-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: .9rem;
+    }
+
+    .post-brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--black);
+      color: var(--gold);
+      border: 1px solid var(--gold);
+    }
+
+    .post-visual {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      min-height: 430px;
+      background: linear-gradient(145deg, #fdfbf7, #e7ddcd);
+    }
+
+    .post-shoe {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      object-fit: contain;
+      filter: drop-shadow(0 30px 15px rgba(0,0,0,.2));
+    }
+
+    .post-info {
+      padding: 50px 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .new {
+      display: inline-block;
+      width: fit-content;
+      background: var(--gold);
+      color: var(--black);
+      padding: 6px 11px;
+      font-size: .72rem;
+      font-weight: 900;
+      margin-bottom: 15px;
+      transform: rotate(-2deg);
+    }
+
+    .post-info h3 {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: .95;
+      margin-bottom: 12px;
+    }
+
+    .post-info p { color: var(--muted); }
+
+    .post-price {
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin: 18px 0;
+    }
+
+    .post-bottom {
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 16px 20px;
+      font-size: .78rem;
+    }
+
+    .post-bottom strong { color: var(--gold-light); }
+
+    /* HOW TO ORDER */
+    .order {
+      background: var(--white);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step {
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--cream);
+    }
+
+    .step-number {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--gold-light);
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .step h3 { margin-bottom: 7px; }
+    .step p { color: var(--muted); font-size: .88rem; }
+
+    /* CTA */
+    .cta {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .cta-inner { max-width: 780px; margin: auto; }
+
+    .cta h2 { margin-bottom: 15px; }
+    .cta p { color: #c9c4ba; margin-bottom: 25px; }
+
+    /* FOOTER */
+    footer {
+      background: #090909;
+      color: #bdb8ae;
+      padding: 50px 0 25px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 45px;
+      padding-bottom: 35px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    footer h3 {
+      color: var(--white);
+      margin-bottom: 13px;
+    }
+
+    footer p, footer li {
+      font-size: .88rem;
+      margin-bottom: 7px;
+    }
+
+    footer ul { list-style: none; }
+
+    footer a:hover { color: var(--gold-light); }
+
+    .copyright {
+      text-align: center;
+      font-size: .78rem;
+      padding-top: 20px;
+      color: #77736b;
+    }
+
+    /* FLOATING WHATSAPP */
+    .whatsapp {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1001;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #1fbd63;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 1.55rem;
+      font-weight: 900;
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+
+    .whatsapp:hover { transform: scale(1.06); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-grid, .story-grid { grid-template-columns: 1fr; }
+      .stock-manager-card { grid-template-columns: 1fr; }
+      .account-grid { grid-template-columns: 1fr; }
+      .hero { padding: 80px 0; }
+      .hero-card { max-width: 560px; margin: auto; }
+      .benefit-grid { grid-template-columns: repeat(2, 1fr); }
+      .benefit:nth-child(2) { border-right: 0; }
+      .benefit:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 680px) {
+      .nav-links, .nav-cta { display: none; }
+      .menu-btn { display: block; }
+      .nav-links.open {
+        display: flex;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 78px;
+        background: var(--cream);
+        padding: 20px;
+        flex-direction: column;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .hero-grid { gap: 35px; }
+      .hero { min-height: auto; padding: 70px 0; }
+      .shoe-stage { min-height: 310px; }
+      .shoe-icon { font-size: 6.5rem; }
+      .stock-manager-card { padding: 18px; }
+      .benefit-grid, .product-grid, .kit-grid, .steps {
+        grid-template-columns: 1fr;
+      }
+      .benefit { border-right: 0; border-bottom: 1px solid var(--border); }
+      .benefit:last-child { border-bottom: 0; }
+      .post-visual { grid-template-columns: 1fr; }
+      .post-shoe { min-height: 270px; }
+      .post-info { padding: 30px; }
+      .post-bottom { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; gap: 25px; }
+      section { padding: 65px 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="announcement">
+    <strong>KENZOFABS</strong> — Step in Style. &nbsp; | &nbsp; Affordable • Stylish • Quality
+  </div>
+
+  <button class="install-app btn btn-gold" id="installApp" type="button">Install Kenzofabs app</button>
+
+  <nav>
+    <div class="container nav-inner">
+      <a href="#home" class="brand" aria-label="Kenzofabs home">
+        <div class="brand-mark">K</div>
+        <div class="brand-text">
+          <span>KENZOFABS</span>
+          <small>Step in Style.</small>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#stock">Add Stock</a></li>
+        <li><a href="#account">Account & Cart</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#brand">Brand</a></li>
+        <li><a href="#order">How to Order</a></li>
+      </ul>
+
+      <!-- Replace the number below with your real WhatsApp number.
+           Use international format without + or spaces, e.g. 2547XXXXXXXX -->
+      <a class="nav-cta" href="https://wa.me/254700000000?text=Hello%20Kenzofabs%2C%20I%27d%20like%20to%20order%20a%20shoe." target="_blank">
+        Order on WhatsApp
+      </a>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+
+  <main id="home">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Affordable footwear • Student focused</div>
+          <h1>Step in <span class="gold">Style.</span></h1>
+          <p class="hero-copy">
+            Discover stylish, comfortable and affordable footwear from Kenzofabs —
+            made for students, staff and the community around Alupe University.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="#shop">Shop Shoes →</a>
+            <a class="btn btn-dark" href="https://wa.me/254700000000?text=Hello%20Kenzofabs%2C%20please%20share%20your%20available%20shoes." target="_blank">WhatsApp Us</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="shoe-stage">
+            <img class="shoe-icon" src="images/sandal-collection.jpeg" alt="Kenzofabs sandals collection">
+            <div class="hero-card-label">KENZOFABS • QUALITY MEETS AFFORDABILITY</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="benefits">
+      <div class="container">
+        <div class="benefit-grid">
+          <div class="benefit">
+            <div class="benefit-icon">✓</div>
+            <h3>Quality Shoes</h3>
+            <p>Selected styles for everyday wear.</p>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon">₵</div>
+            <h3>Affordable Prices</h3>
+            <p>Fashion that fits student budgets.</p>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon">★</div>
+            <h3>Trendy Styles</h3>
+            <p>Fresh looks for school, work and weekends.</p>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon">♥</div>
+            <h3>Customer Care</h3>
+            <p>Friendly service from order to delivery.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP -->
+    <section id="shop">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Featured collection</div>
+            <h2>Find your pair.</h2>
+          </div>
+          <p class="section-description">
+            Replace the sample products below with your actual Kenzofabs stock,
+            photos, sizes and prices.
+          </p>
+        </div>
+
+        <div class="product-grid">
+
+          <article class="product">
+            <div class="product-photo">
+              <span class="badge">Best seller</span>
+              <img class="big-shoe" src="images/sandal-collection.jpeg" alt="Blue, tan, cream and black women's sandals">
+            </div>
+            <div class="product-body">
+              <h3>Classic White Sneaker</h3>
+              <p class="product-meta">Everyday • Lightweight • Stylish<br>Sizes: 38–44</p>
+              <div class="price-row">
+                <span class="price">KSh 430</span>
+                <a class="btn btn-gold small-btn" href="https://wa.me/254700000000?text=Hello%20Kenzofabs%2C%20I%27m%20interested%20in%20the%20Classic%20White%20Sneaker." target="_blank">Order</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product">
+            <div class="product-photo">
+              <span class="badge">New</span>
+              <img class="big-shoe" src="images/black-embellished-sandal.jpeg" alt="Black embellished women's sandals">
+            </div>
+            <div class="product-body">
+              <h3>Smart Casual Shoe</h3>
+              <p class="product-meta">Casual • Comfortable • Versatile<br>Sizes: 39–44</p>
+              <div class="price-row">
+                <span class="price">KSh 430</span>
+                <a class="btn btn-gold small-btn" href="https://wa.me/254700000000?text=Hello%20Kenzofabs%2C%20I%27m%20interested%20in%20the%20Smart%20Casual%20Shoe." target="_blank">Order</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product">
+            <div class="product-photo">
+              <span class="badge">Popular</span>
+              <img class="big-shoe" src="images/sandal-collection.jpeg" alt="Blue, tan, cream and black women's sandals">
+            </div>
+            <div class="product-body">
+              <h3>Everyday Sandal</h3>
+              <p class="product-meta">Light • Easy wear • Affordable<br>Sizes: 36–43</p>
+              <div class="price-row">
+                <span class="price">KSh 430</span>
+                <a class="btn btn-gold small-btn" href="https://wa.me/254700000000?text=Hello%20Kenzofabs%2C%20I%27m%20interested%20in%20the%20Everyday%20Sandal." target="_blank">Order</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product">
+            <div class="product-photo">
+              <span class="badge">New</span>
+              <img src="images/sandal-collection.jpeg" alt="Blue, tan, cream and black women's sandals">
+            </div>
+            <div class="product-body">
+              <h3>Colour Pop Sandals</h3>
+              <p class="product-meta">Comfortable • Colourful • Everyday<br>Sizes: 36–39</p>
+              <div class="price-row">
+                <span class="price">KSh 430</span>
+                <a class="btn btn-gold small-btn" href="https://wa.me/254768609246?text=Hello%20Kenzofabs%2C%20I%27m%20interested%20in%20the%20Colour%20Pop%20Sandals." target="_blank" rel="noopener noreferrer">Order</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product">
+            <div class="product-photo">
+              <span class="badge">Featured</span>
+              <img src="images/black-embellished-sandal.jpeg" alt="Black embellished women's sandals">
+            </div>
+            <div class="product-body">
+              <h3>Black Embellished Sandal</h3>
+              <p class="product-meta">Elegant • Glossy finish • Comfortable<br>Sizes: 36–39</p>
+              <div class="price-row">
+                <span class="price">KSh 430</span>
+                <a class="btn btn-gold small-btn" href="https://wa.me/254768609246?text=Hello%20Kenzofabs%2C%20I%27m%20interested%20in%20the%20Black%20Embellished%20Sandal." target="_blank" rel="noopener noreferrer">Order</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- STOCK MANAGER -->
+    <section id="stock" class="stock-manager">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Stock manager</div>
+            <h2>Add more shoes.</h2>
+          </div>
+          <p class="section-description">
+            Add a product photo, details and price. New stock is saved on this device
+            and appears below the form after you add it.
+          </p>
+        </div>
+
+        <div class="stock-manager-card">
+          <form class="stock-form" id="stockForm">
+            <label>
+              Product image
+              <input id="stockImage" type="file" accept="image/*" required>
+            </label>
+            <p class="stock-help">Choose a clear photo from your phone or computer.</p>
+
+            <label>
+              Shoe name
+              <input id="stockName" type="text" placeholder="e.g. Black Flat Sandal" required>
+            </label>
+
+            <label>
+              Description and sizes
+              <textarea id="stockDetails" placeholder="Comfortable • Everyday&#10;Sizes: 36–40" required></textarea>
+            </label>
+
+            <label>
+              Price (KSh)
+              <input id="stockPrice" type="number" min="1" step="1" value="430" required>
+            </label>
+
+            <label>
+              Badge
+              <input id="stockBadge" type="text" placeholder="New arrival">
+            </label>
+
+            <button class="btn btn-gold" type="submit">Add to stock list</button>
+            <p class="stock-message" id="stockMessage" role="status" aria-live="polite"></p>
+            <div class="owner-tools">
+              <button class="btn btn-dark" id="ownerToggle" type="button">Owner access</button>
+              <div class="owner-login" id="ownerLogin">
+                <input id="ownerPinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="Owner PIN" aria-label="Owner PIN">
+                <button class="btn btn-gold" id="ownerUnlock" type="button">Unlock</button>
+              </div>
+              <span class="stock-help" id="ownerStatus">Owner controls hidden</span>
+            </div>
+          </form>
+
+          <div class="stock-list">
+            <h3>Added on this device</h3>
+            <div class="product-grid" id="stockGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW STOCK -->
+    <section id="new-stock" class="new-stock">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">New stock</div>
+            <h2>More pairs in stock.</h2>
+          </div>
+          <p class="section-description">Original product photos from the latest Kenzofabs stock.</p>
+        </div>
+        <div class="product-grid" id="newStockGrid"></div>
+      </div>
+    </section>
+
+    <!-- CUSTOMER ACCOUNT -->
+    <section id="account" class="account-panel">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Customer account</div>
+            <h2>Sign in and shop.</h2>
+          </div>
+          <p class="section-description">Create an account to save your cart securely across devices.</p>
+        </div>
+
+        <div class="account-grid">
+          <div class="account-card" id="authCard">
+            <h3 id="authTitle">Create an account</h3>
+            <form id="signupForm">
+              <label>Full name<input id="signupName" type="text" required autocomplete="name"></label>
+              <label>Phone number<input id="signupPhone" type="tel" required autocomplete="tel"></label>
+              <label>Email<input id="signupEmail" type="email" required autocomplete="email"></label>
+              <label>Password<input id="signupPassword" type="password" minlength="8" required autocomplete="new-password"></label>
+              <button class="btn btn-gold" type="submit">Create account</button>
+            </form>
+            <form id="loginForm" hidden>
+              <label>Email<input id="loginEmail" type="email" required autocomplete="email"></label>
+              <label>Password<input id="loginPassword" type="password" required autocomplete="current-password"></label>
+              <button class="btn btn-gold" type="submit">Sign in</button>
+            </form>
+            <button class="btn btn-dark" id="authSwitch" type="button">I already have an account</button>
+            <button class="btn btn-dark" id="signOut" type="button" hidden>Sign out</button>
+            <button class="btn btn-dark" id="resendConfirmation" type="button" hidden>Resend confirmation email</button>
+            <p class="account-message" id="authMessage" role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="account-card">
+            <h3>Your cart</h3>
+            <div class="cart-list" id="cartList"><p class="account-message">Sign in to view your cart.</p></div>
+            <div class="cart-total" id="cartTotal"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / STORY -->
+    <section id="about" class="story">
+      <div class="container story-grid">
+        <div class="logo-display">
+          <div>
+            <div class="logo-symbol-large">K</div>
+            <h3>KENZOFABS</h3>
+            <div class="script">Step in Style.</div>
+          </div>
+        </div>
+
+        <div class="story-copy">
+          <div class="section-kicker">The Kenzofabs idea</div>
+          <h2>Style shouldn't be expensive.</h2>
+          <p>
+            Kenzofabs is a student and community-focused footwear brand built around
+            a simple promise: make fashionable footwear easier to access without
+            making customers stretch their budgets.
+          </p>
+          <p>
+            We combine affordable fast-moving footwear, convenient ordering,
+            personal size/style guidance and delivery to make buying shoes simple.
+          </p>
+
+          <div class="values">
+            <div class="value"><strong>Affordable</strong>Prices made for real budgets.</div>
+            <div class="value"><strong>Stylish</strong>Fresh looks for everyday life.</div>
+            <div class="value"><strong>Convenient</strong>Order through WhatsApp and social media.</div>
+            <div class="value"><strong>Reliable</strong>Friendly service and clear communication.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRAND KIT -->
+    <section id="brand" class="brand-kit">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Visual identity</div>
+            <h2>The Kenzofabs look.</h2>
+          </div>
+          <p class="section-description">
+            A simple black, champagne-gold and cream system keeps the brand
+            recognizable across the website, packaging and social media.
+          </p>
+        </div>
+
+        <div class="kit-grid">
+
+          <div class="kit-card">
+            <h3>Official brand colours</h3>
+            <div class="swatches">
+              <div class="swatch">
+                <div class="swatch-color" style="background:#111111;"></div>
+                <strong>Black</strong><br>
+                <small>#111111</small>
+              </div>
+              <div class="swatch">
+                <div class="swatch-color" style="background:#C9A227;"></div>
+                <strong>Champagne Gold</strong><br>
+                <small>#C9A227</small>
+              </div>
+              <div class="swatch">
+                <div class="swatch-color" style="background:#F7F3EA;"></div>
+                <strong>Cream</strong><br>
+                <small>#F7F3EA</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="kit-card">
+            <h3>Packaging sticker</h3>
+            <div class="packaging">
+              <div class="sticker">
+                <div>
+                  <span>K</span>
+                  <span>KENZOFABS</span>
+                  <em>Step in Style.</em>
+                </div>
+              </div>
+              <p style="text-align:center;color:#bbb;margin-top:12px;font-size:.8rem;">
+                Use on plain black, cream or kraft packaging.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- THANK YOU CARD -->
+    <section class="thankyou">
+      <div class="container">
+        <div class="section-head" style="justify-content:center;text-align:center;">
+          <div>
+            <div class="section-kicker">Packaging experience</div>
+            <h2>A little thank you.</h2>
+          </div>
+        </div>
+
+        <div class="thank-card">
+          <div class="mini-logo">K • KENZOFABS</div>
+          <div class="script">Step in Style.</div>
+          <h3>Thank You</h3>
+          <p>
+            For choosing Kenzofabs!<br>
+            Your support means the world to us.
+          </p>
+          <div class="share">
+            Wear it. Love it. Share it.<br><br>
+            <strong>Tag us: @Kenzofabs</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL TEMPLATE -->
+    <section class="social">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Social media template</div>
+            <h2>One look everywhere.</h2>
+          </div>
+          <p class="section-description">
+            Use this visual structure for Instagram posts, Facebook posts and
+            WhatsApp Status product promotions.
+          </p>
+        </div>
+
+        <div class="post-template">
+          <div class="post-top">
+            <div class="post-brand">
+              <div class="post-brand-mark">K</div>
+              Kenzofabs
+            </div>
+            <span>•••</span>
+          </div>
+
+          <div class="post-visual">
+            <img class="post-shoe" src="images/black-embellished-sandal.jpeg" alt="Black embellished women's sandals">
+
+            <div class="post-info">
+              <span class="new">NEW ARRIVAL</span>
+              <h3>Classic<br>White Sneaker</h3>
+              <p>Comfort &nbsp;|&nbsp; Style &nbsp;|&nbsp; Everyday</p>
+              <p style="margin-top:15px;">
+                <strong>Sizes:</strong> 38–44<br>
+                <strong>Colours:</strong> White / Black<br>
+                <strong>Delivery:</strong> Available
+              </p>
+              <div class="post-price">KSh 430</div>
+              <a class="btn btn-gold" href="https://wa.me/254768609246?text=Hello%20Kenzofabs%2C%20I%27d%20like%20to%20order%20the%20Classic%20White%20Sneaker." target="_blank">
+                ORDER NOW
+              </a>
+            </div>
+          </div>
+
+          <div class="post-bottom">
+            <span><strong>Delivery:</strong> Alupe & surrounding areas</span>
+            <span><strong>WhatsApp:</strong> 0768 609 246</span>
+            <span><strong>@Kenzofabs</strong></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW TO ORDER -->
+    <section id="order" class="order">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Simple shopping</div>
+            <h2>How to order.</h2>
+          </div>
+          <p class="section-description">
+            Keep the buying process quick and friendly, especially for customers
+            ordering from WhatsApp.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Choose</h3>
+            <p>Browse our products and select your preferred shoe.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Confirm size</h3>
+            <p>Send us your size and preferred colour on WhatsApp.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Place order</h3>
+            <p>Confirm your order details and delivery arrangements.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Step out</h3>
+            <p>Receive your shoes and step out in style.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="container cta-inner">
+        <div class="section-kicker">Ready when you are</div>
+        <h2>Find your next favourite pair.</h2>
+        <p>
+          Affordable footwear. Stylish choices. Simple ordering.
+          That's the Kenzofabs way.
+        </p>
+        <a class="btn btn-gold" href="https://wa.me/254768609246?text=Hello%20Kenzofabs%2C%20I%27d%20like%20to%20see%20your%20available%20shoes." target="_blank">
+          Shop via WhatsApp →
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand" style="margin-bottom:15px;">
+            <div class="brand-mark">K</div>
+            <div class="brand-text">
+              <span style="color:white;">KENZOFABS</span>
+              <small>Step in Style.</small>
+            </div>
+          </div>
+          <p>
+            Affordable and stylish footwear for students, staff and the surrounding community.
+          </p>
+        </div>
+
+        <div>
+          <h3>Quick links</h3>
+          <ul>
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#about">About Kenzofabs</a></li>
+            <li><a href="#brand">Brand Identity</a></li>
+            <li><a href="#order">How to Order</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Connect</h3>
+          <ul>
+            <li><a href="https://wa.me/254768609246" target="_blank">WhatsApp</a></li>
+            <li><a href="https://www.instagram.com/kenzofabs_designs/" target="_blank" rel="noopener noreferrer">Instagram: @kenzofabs_designs</a></li>
+            <li><a href="#" onclick="return false;">TikTok: @Kenzofabs</a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=61574475659623" target="_blank" rel="noopener noreferrer">Facebook: Kenzofabs</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="copyright">
+        © <span id="year"></span> Kenzofabs. All rights reserved. &nbsp; | &nbsp; Step in Style.
+      </div>
+    </div>
+  </footer>
+
+  <a class="whatsapp" href="https://wa.me/254768609246?text=Hello%20Kenzofabs%2C%20I%27d%20like%20to%20make%20an%20order." target="_blank" aria-label="Chat with Kenzofabs on WhatsApp">◔</a>
+
+  <script>
+    // Mobile navigation
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+    const installApp = document.getElementById("installApp");
+    let installPrompt;
+
+    window.addEventListener("beforeinstallprompt", event => {
+      event.preventDefault();
+      installPrompt = event;
+      installApp.hidden = false;
+    });
+
+    installApp.addEventListener("click", async () => {
+      if (!installPrompt) {
+        alert("To install: open Chrome menu (⋮), then choose Add to Home screen or Install app.");
+        return;
+      }
+      installPrompt.prompt();
+      const choice = await installPrompt.userChoice;
+      if (choice.outcome === "accepted") installApp.hidden = true;
+      installPrompt = null;
+    });
+
+    window.addEventListener("appinstalled", () => {
+      installApp.hidden = true;
+      installPrompt = null;
+    });
+
+    if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
+      navigator.serviceWorker.register("service-worker.js").catch(error => {
+        console.error("Kenzofabs offline support could not be registered.", error);
+      });
+    }
+
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => navLinks.classList.remove("open"));
+    });
+
+    // Add stock locally so the form works on a static GitHub Pages website.
+    const stockForm = document.getElementById("stockForm");
+    const stockGrid = document.getElementById("stockGrid");
+    const stockMessage = document.getElementById("stockMessage");
+    const stockStorageKey = "kenzofabs-stock";
+    const whatsappNumber = "254768609246";
+
+    const soldStockKey = "kenzofabs-sold-stock";
+    const ownerPin = "38687615";
+    let ownerMode = false;
+
+    function addStockCard(item, target = stockGrid, stockId = "") {
+      if (soldStockKey && JSON.parse(localStorage.getItem(soldStockKey) || "[]").includes(stockId)) return;
+      const article = document.createElement("article");
+      article.className = "product";
+      article.dataset.productId = stockId || item.name;
+      article.dataset.productName = item.name;
+      article.dataset.productPrice = item.price;
+      article.dataset.productImage = item.image;
+
+      const photo = document.createElement("div");
+      photo.className = "product-photo";
+
+      if (item.badge) {
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = item.badge;
+        photo.appendChild(badge);
+      }
+
+      const image = document.createElement("img");
+      image.className = "big-shoe";
+      image.src = item.image;
+      image.alt = item.name;
+      photo.appendChild(image);
+
+      const body = document.createElement("div");
+      body.className = "product-body";
+
+      const name = document.createElement("h3");
+      name.textContent = item.name;
+      body.appendChild(name);
+
+      const details = document.createElement("p");
+      details.className = "product-meta";
+      details.textContent = item.details;
+      body.appendChild(details);
+
+      const priceRow = document.createElement("div");
+      priceRow.className = "price-row";
+
+      const price = document.createElement("span");
+      price.className = "price";
+      price.textContent = `KSh ${item.price}`;
+      priceRow.appendChild(price);
+
+      const order = document.createElement("a");
+      order.className = "btn btn-gold small-btn";
+      order.target = "_blank";
+      order.rel = "noopener noreferrer";
+      order.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hello Kenzofabs, I'm interested in the ${item.name}.`)}`;
+      order.textContent = "Order";
+      priceRow.appendChild(order);
+
+      const cart = document.createElement("button");
+      cart.className = "cart-button";
+      cart.type = "button";
+      cart.dataset.addCart = "true";
+      cart.textContent = "Add to cart";
+      priceRow.appendChild(cart);
+
+      const remove = document.createElement("button");
+      remove.className = "remove-stock";
+      remove.type = "button";
+      remove.textContent = "Mark sold out";
+      remove.addEventListener("click", () => {
+        if (!ownerMode || !confirm(`Remove ${item.name} from stock?`)) return;
+        const soldItems = JSON.parse(localStorage.getItem(soldStockKey) || "[]");
+        if (stockId && !soldItems.includes(stockId)) {
+          soldItems.push(stockId);
+          localStorage.setItem(soldStockKey, JSON.stringify(soldItems));
+        }
+        article.remove();
+      });
+      body.appendChild(remove);
+
+      body.appendChild(priceRow);
+      article.append(photo, body);
+      target.appendChild(article);
+    }
+
+    JSON.parse(localStorage.getItem(stockStorageKey) || "[]").forEach((item, index) => {
+      addStockCard(item, stockGrid, `custom-${index}-${item.name}`);
+    });
+
+    const newStockGrid = document.getElementById("newStockGrid");
+    const stockColours = [
+      "Black", "Blue", "Black", "Black", "Black", "White", "White",
+      "Mixed", "White", "White", "White", "Black", "White", "Black",
+      "White", "White", "White", "Black", "White", "Black", "White",
+      "White", "White", "White", "White", "Blue", "White", "White",
+      "White", "White", "Blue", "Grey", "Grey", "Black", "White",
+      "Grey", "White"
+    ];
+    for (let stockNumber = 1; stockNumber <= 37; stockNumber++) {
+      addStockCard({
+        image: `images/stock-${String(stockNumber).padStart(2, "0")}.jpeg`,
+        name: `Stock ${String(stockNumber).padStart(2, "0")} - ${stockColours[stockNumber - 1]}`,
+        details: `Original stock photo • Colour: ${stockColours[stockNumber - 1]}`,
+        price: "353",
+        badge: "New stock"
+      }, newStockGrid, `stock-${String(stockNumber).padStart(2, "0")}`);
+    }
+
+    function addCartButtonToExistingProducts() {
+      document.querySelectorAll("#shop .product").forEach((article, index) => {
+        if (article.querySelector("[data-add-cart]")) return;
+        const name = article.querySelector("h3")?.textContent?.trim();
+        const price = article.querySelector(".price")?.textContent?.replace(/[^\d]/g, "");
+        const image = article.querySelector("img")?.getAttribute("src") || "";
+        article.dataset.productId = `featured-${index + 1}`;
+        article.dataset.productName = name || `Featured shoe ${index + 1}`;
+        article.dataset.productPrice = price || "430";
+        article.dataset.productImage = image;
+        const button = document.createElement("button");
+        button.className = "cart-button";
+        button.type = "button";
+        button.dataset.addCart = "true";
+        button.textContent = "Add to cart";
+        article.querySelector(".price-row")?.appendChild(button);
+      });
+    }
+
+    addCartButtonToExistingProducts();
+
+    const authRedirectUrl = `${window.location.origin}${window.location.pathname}`;
+    const supabaseClient = window.supabase.createClient(
+      "https://dpzcesxuoeuaayjhemun.supabase.co",
+      "sb_publishable_xFW5_hCNzDCnNyuIKdrGiw__IIHyizj",
+      {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: true
+        }
+      }
+    );
+    const authCard = document.getElementById("authCard");
+    const signupForm = document.getElementById("signupForm");
+    const loginForm = document.getElementById("loginForm");
+    const authSwitch = document.getElementById("authSwitch");
+    const signOut = document.getElementById("signOut");
+    const authMessage = document.getElementById("authMessage");
+    const resendConfirmation = document.getElementById("resendConfirmation");
+    const cartList = document.getElementById("cartList");
+    const cartTotal = document.getElementById("cartTotal");
+    let authMode = "signup";
+
+    function showAuthMessage(message) {
+      authMessage.textContent = message;
+    }
+
+    function setAuthBusy(form, busy) {
+      form.querySelector("button[type=submit]").disabled = busy;
+      form.querySelector("button[type=submit]").textContent = busy ? "Please wait..." : (form === signupForm ? "Create account" : "Sign in");
+    }
+
+    async function loadCart() {
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (!user) {
+        cartList.innerHTML = '<p class="account-message">Sign in to view your cart.</p>';
+        cartTotal.textContent = "";
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from("cart_items")
+        .select("id, product_name, price, quantity")
+        .order("created_at", { ascending: false });
+      if (error) {
+        showAuthMessage(`Cart error: ${error.message}`);
+        return;
+      }
+
+      cartList.innerHTML = "";
+      let total = 0;
+      if (!data.length) {
+        cartList.innerHTML = '<p class="account-message">Your cart is empty.</p>';
+      }
+      data.forEach(item => {
+        total += item.price * item.quantity;
+        const row = document.createElement("div");
+        row.className = "cart-item";
+        row.innerHTML = `<span>${item.product_name}<small>KSh ${item.price} × ${item.quantity}</small></span>`;
+        const remove = document.createElement("button");
+        remove.className = "cart-remove";
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", async () => {
+          const { error: removeError } = await supabaseClient.from("cart_items").delete().eq("id", item.id);
+          if (removeError) {
+            showAuthMessage(`Cart error: ${removeError.message}`);
+            return;
+          }
+          loadCart();
+        });
+        row.appendChild(remove);
+        cartList.appendChild(row);
+      });
+      cartTotal.textContent = data.length ? `Total: KSh ${total}` : "";
+    }
+
+    async function addToCart(article) {
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (!user) {
+        showAuthMessage("Please sign in before adding items to your cart.");
+        document.getElementById("account").scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+      const product = {
+        user_id: user.id,
+        product_id: article.dataset.productId,
+        product_name: article.dataset.productName,
+        price: Number(article.dataset.productPrice),
+        image_url: article.dataset.productImage,
+        quantity: 1
+      };
+      const { data: existing, error: findError } = await supabaseClient
+        .from("cart_items")
+        .select("id, quantity")
+        .eq("user_id", user.id)
+        .eq("product_id", product.product_id)
+        .maybeSingle();
+      if (findError) {
+        showAuthMessage(`Cart error: ${findError.message}`);
+        return;
+      }
+      const result = existing
+        ? await supabaseClient.from("cart_items").update({ quantity: existing.quantity + 1 }).eq("id", existing.id)
+        : await supabaseClient.from("cart_items").insert(product);
+      if (result.error) {
+        showAuthMessage(`Cart error: ${result.error.message}`);
+        return;
+      }
+      showAuthMessage("Added to your cart.");
+      loadCart();
+    }
+
+    document.addEventListener("click", event => {
+      const button = event.target.closest("[data-add-cart]");
+      if (button) addToCart(button.closest(".product"));
+    });
+
+    signupForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      setAuthBusy(signupForm, true);
+      const { error } = await supabaseClient.auth.signUp({
+        email: document.getElementById("signupEmail").value.trim(),
+        password: document.getElementById("signupPassword").value,
+        options: {
+          emailRedirectTo: authRedirectUrl,
+          data: {
+            full_name: document.getElementById("signupName").value.trim(),
+            phone: document.getElementById("signupPhone").value.trim()
+          }
+        }
+      });
+      setAuthBusy(signupForm, false);
+      showAuthMessage(error ? error.message : "Account created. Check your email to confirm it.");
+      resendConfirmation.hidden = Boolean(error);
+    });
+
+    loginForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      setAuthBusy(loginForm, true);
+      const { error } = await supabaseClient.auth.signInWithPassword({
+        email: document.getElementById("loginEmail").value.trim(),
+        password: document.getElementById("loginPassword").value
+      });
+      setAuthBusy(loginForm, false);
+      showAuthMessage(error ? error.message : "Signed in successfully.");
+      resendConfirmation.hidden = !error;
+      if (!error) loadCart();
+    });
+
+    resendConfirmation.addEventListener("click", async () => {
+      const email = document.getElementById("signupEmail").value.trim() || document.getElementById("loginEmail").value.trim();
+      if (!email) {
+        showAuthMessage("Enter your email first, then request a confirmation email.");
+        return;
+      }
+      resendConfirmation.disabled = true;
+      const { error } = await supabaseClient.auth.resend({
+        type: "signup",
+        email,
+        options: { emailRedirectTo: authRedirectUrl }
+      });
+      resendConfirmation.disabled = false;
+      showAuthMessage(error ? error.message : "A new confirmation email was sent.");
+    });
+
+    authSwitch.addEventListener("click", () => {
+      authMode = authMode === "signup" ? "login" : "signup";
+      signupForm.hidden = authMode === "login";
+      loginForm.hidden = authMode !== "login";
+      document.getElementById("authTitle").textContent = authMode === "signup" ? "Create an account" : "Welcome back";
+      authSwitch.textContent = authMode === "signup" ? "I already have an account" : "Create a new account";
+    });
+
+    signOut.addEventListener("click", async () => {
+      const { error } = await supabaseClient.auth.signOut();
+      showAuthMessage(error ? error.message : "Signed out.");
+      if (!error) loadCart();
+    });
+
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      const signedIn = Boolean(session?.user);
+      signupForm.hidden = signedIn;
+      loginForm.hidden = signedIn;
+      authSwitch.hidden = signedIn;
+      signOut.hidden = !signedIn;
+      resendConfirmation.hidden = signedIn || event === "SIGNED_IN";
+      document.getElementById("authTitle").textContent = signedIn ? `Signed in as ${session.user.email}` : "Create an account";
+      if (event === "SIGNED_IN") showAuthMessage("Email confirmed. You are signed in.");
+      loadCart();
+    });
+    loadCart();
+
+    document.getElementById("ownerToggle").addEventListener("click", () => {
+      if (ownerMode) {
+        ownerMode = false;
+        document.body.classList.remove("owner-mode");
+        document.getElementById("ownerToggle").textContent = "Owner access";
+        document.getElementById("ownerStatus").textContent = "Owner controls hidden";
+        return;
+      }
+
+      document.getElementById("ownerLogin").classList.toggle("open");
+      document.getElementById("ownerPinInput").focus();
+    });
+
+    document.getElementById("ownerUnlock").addEventListener("click", () => {
+      if (document.getElementById("ownerPinInput").value === ownerPin) {
+        ownerMode = true;
+        document.body.classList.add("owner-mode");
+        document.getElementById("ownerLogin").classList.remove("open");
+        document.getElementById("ownerPinInput").value = "";
+        document.getElementById("ownerToggle").textContent = "Lock owner controls";
+        document.getElementById("ownerStatus").textContent = "Owner controls unlocked";
+      } else {
+        document.getElementById("ownerStatus").textContent = "Incorrect PIN";
+      }
+    });
+
+    stockForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const file = document.getElementById("stockImage").files[0];
+
+      if (!file || !file.type.startsWith("image/")) {
+        stockMessage.textContent = "Please choose an image file.";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        const item = {
+          image: reader.result,
+          name: document.getElementById("stockName").value.trim(),
+          details: document.getElementById("stockDetails").value.trim(),
+          price: document.getElementById("stockPrice").value,
+          badge: document.getElementById("stockBadge").value.trim()
+        };
+        const savedStock = JSON.parse(localStorage.getItem(stockStorageKey) || "[]");
+        savedStock.push(item);
+        localStorage.setItem(stockStorageKey, JSON.stringify(savedStock));
+        addStockCard(item);
+        stockForm.reset();
+        document.getElementById("stockPrice").value = "430";
+        stockMessage.textContent = `${item.name} was added to the stock list.`;
+      });
+      reader.addEventListener("error", () => {
+        stockMessage.textContent = "The image could not be read. Please try again.";
+      });
+      reader.readAsDataURL(file);
+    });
+
+    // Current year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
